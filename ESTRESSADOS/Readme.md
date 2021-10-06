@@ -762,7 +762,7 @@ int main() {
 ```
 
 - **mais_ocorrencias**: Qual a maior quantidade de ocorrências do mesmo nível de stress. (abs)
- ```cpp
+```cpp
  #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -794,15 +794,45 @@ int main() {
 
     return 0;
 }
- ```
+```
 
 - **mais_recorrentes**: Quais os níveis de stress mais recorrentes. (abs)
     - ```{1, 3, 4, 5, -1, -5, -5, 3, -3} -> {5, 3}```
 
 ### **Proximidade**: 2 funções
 - **briga**: Quando alguém super estressado(>50) está ao lado de duas pessoas muito estressadas(>30) pode dar briga. Quantas vezes essa situação acontece?
-- **apaziguado**: Se alguém hiper estressado(>80) estiver ao lado de pelo menos uma pessoa bem tranquila (<10) ela vai ser apaziguada. Em que posições estão esses que serão apaziguados?
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+int briga(std::vector<int> vet) {
+    int cont=0;
+
+    for(int i=0; i < (int) vet.size(); i++){
+       vet[i]=std::abs(vet[i]);
+    }
+   
+    for(int i=0; i < (int) vet.size() - 1; i++){ 
+       if(vet[i-1] > 30 && vet[i] > 50 && vet[i+1] > 30){
+           cont++;
+       }
+    }
+
+   return cont;
+}
+
+int main() {
+    std::cout << briga({-37, 56, -32, 64, 39}) << '\n';
+
+   return 0;
+}
+```
+
+- **apaziguado**: Se alguém hiper estressado(>80) estiver ao lado de pelo menos uma pessoa bem tranquila (<10) ela vai ser apaziguada. Em que posições estão esses que serão apaziguados?
+```cpp
+
+```
 
 ### **Sequências**: 3 funções
 - **quantos_times**: Duas ou mais pessoas do mesmo sexo seguidas podem formar um time. Quantos times existem na fila?
