@@ -723,11 +723,44 @@ vector<int> abandonados(const vector<int>& v);
 ### **Map - Manipulação**: 3 funções
 - **sozinhos**: Quais PESSOAS eram as únicas representantes do seu nível de stress na fila? (abs)
 ```cpp
-//{1, 3, 4, 3, -1, -3, -3} -> {4}
-vector<int> sozinhos(const vector<int>& v);
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+std::vector<int> sozinhos(std::vector<int> vet) {
+    std::vector<int> vetaux;
+
+    for(int i=0; i < (int) vet.size(); i++){
+        vet[i]=std::abs(vet[i]);
+    }
+    
+    for(int i=0; i < (int) vet.size(); i++){ 
+        int cont=0;
+
+        for(int j=0; j < (int) vet.size(); j++){    
+              if(vet[i] == vet[j]){                     
+                cont++;
+              }
+        }
+
+        if(cont == 1){
+            vetaux.push_back(vet[i]);
+        }
+    }
+    return vetaux;
+}
+
+int main() {
+    std::vector<int> vetaux = { sozinhos({1, 3, 4, 3, -1, -3, -3}) };
+
+    for(int i=0; i < (int) vetaux.size(); i++){
+        std::cout << vetaux[i] << " ";
+    }
+
+    return 0;
+}
 ```
 
-{1, 3, 4, 3, -1, -2, -2} -> {3, -2}
 - **mais_ocorrencias**: Qual a maior quantidade de ocorrências do mesmo nível de stress. (abs)
     - ```{1, 3, 4, 5, -1, -5, -5} -> 3```
 - **mais_recorrentes**: Quais os níveis de stress mais recorrentes. (abs)
