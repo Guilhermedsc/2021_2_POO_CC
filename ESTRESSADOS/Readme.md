@@ -734,14 +734,14 @@ vector<int> sozinhos(const vector<int>& v);
     - ```{1, 3, 4, 5, -1, -5, -5, 3, -3} -> {5, 3}```
 
 ### **Proximidade**: 2 funções
-- **briga** Quando alguém super estressado(>50) está ao lado de duas pessoas muito estressadas(>30) pode dar briga. Quantas vezes essa situação acontece?
-- **apaziguado** Se alguém hiper estressado(>80) estiver ao lado de pelo menos uma pessoa bem tranquila (<10) ela vai ser apaziguada. Em que posições estão esses que serão apaziguados?
+- **briga**: Quando alguém super estressado(>50) está ao lado de duas pessoas muito estressadas(>30) pode dar briga. Quantas vezes essa situação acontece?
+- **apaziguado**: Se alguém hiper estressado(>80) estiver ao lado de pelo menos uma pessoa bem tranquila (<10) ela vai ser apaziguada. Em que posições estão esses que serão apaziguados?
 
 
 ### **Sequências**: 3 funções
-- **quantos_times** Duas ou mais pessoas do mesmo sexo seguidas podem formar um time. Quantos times existem na fila?
-- **maior_time** Qual o maior time que apareceu na fila?
-- **sozinhos** Quantas pessoas não estavam em um time?
+- **quantos_times**: Duas ou mais pessoas do mesmo sexo seguidas podem formar um time. Quantos times existem na fila?
+- **maior_time**: Qual o maior time que apareceu na fila?
+- **sozinhos**: Quantas pessoas não estavam em um time?
 
 ### **Grupos**: 2 funções
 - **casais**: Casais são formados quando quando um homem e uma mulher com o mesmo nível de stress são formados. O 3 e o -3 formam um casal. Os participantes fossem orientados a sair da fila e procurar seu par. Quantos casais poderiam ser formados?
