@@ -762,7 +762,40 @@ int main() {
 ```
 
 - **mais_ocorrencias**: Qual a maior quantidade de ocorrências do mesmo nível de stress. (abs)
-    - ```{1, 3, 4, 5, -1, -5, -5} -> 3```
+ ```cpp
+ #include <iostream>
+#include <vector>
+#include <algorithm>
+
+int mais_ocorrencias(std::vector<int> vet) {
+    int cont_final=0;
+
+    for(int i=0; i < (int) vet.size(); i++){
+        vet[i]=std::abs(vet[i]);
+    }
+    
+    for(int i=0; i < (int) vet.size(); i++){ 
+        int cont=0;
+        for(int j=0; j < (int) vet.size(); j++){    
+              if(vet[i] == vet[j]){                     
+                cont++;
+              }
+        }
+        if(cont > cont_final){
+            cont_final=cont;
+        }
+
+    }
+    return cont_final;
+}
+
+int main() {
+    std::cout << mais_ocorrencias({1, 3, 4, 5, -1, -5, -5}) << '\n';
+
+    return 0;
+}
+ ```
+
 - **mais_recorrentes**: Quais os níveis de stress mais recorrentes. (abs)
     - ```{1, 3, 4, 5, -1, -5, -5, 3, -3} -> {5, 3}```
 
