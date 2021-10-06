@@ -831,7 +831,34 @@ int main() {
 
 - **apaziguado**: Se alguém hiper estressado(>80) estiver ao lado de pelo menos uma pessoa bem tranquila (<10) ela vai ser apaziguada. Em que posições estão esses que serão apaziguados?
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+std::vector<int> apaziguado(std::vector<int> vet) {
+    std::vector<int> vetaux;
+
+    for(int i=0; i < (int) vet.size(); i++){
+       vet[i]=std::abs(vet[i]);
+    }
+   
+    for(int i=0; i < (int) vet.size() - 1; i++){ 
+       if(vet[i] > 80 && (vet[i-1] < 10 || vet[i+1] < 10)){
+           vetaux.push_back(i);
+       }
+    }
+    return vetaux;
+}
+
+int main() {
+    std::vector<int> vetaux = { apaziguado({9, -85, 22, -5, 83, -7}) };
+
+    for(int i=0; i < (int) vetaux.size(); i++){
+        std::cout << vetaux[i] << " ";
+    }
+
+    return 0;
+}
 ```
 
 ### **Sequências**: 3 funções
