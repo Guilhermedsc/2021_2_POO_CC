@@ -1020,6 +1020,33 @@ int main() {
 
 ### **Alteração**: 3 funções
 - **remove**: Dado a pessoa X, como fica a fila após remover X?
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+std::vector<int> remove(std::vector<int> vet, int x) {
+    for(int i=0; i < (int) vet.size(); i++){
+        if(vet[i] == x){
+            vet.erase(std::remove(vet.begin(), vet.end(), vet[i]), vet.end());
+        }
+    }
+    return vet;
+}
+
+int main() {
+    int x=0;
+    std::cin >> x;
+    std::vector<int> vetaux = { remove({1, 2, 3, -4, -9}, x)};
+
+    for(int i=0; i < (int) vetaux.size(); i++){
+        std::cout << vetaux[i] << " ";
+    }
+
+    return 0;
+}
+```
+
 - **insert**: Como fica a fila se eu inserir a pessoa X na posição Y.
 - **dance**: O coordenador disse: se você está do lado de alguém da com o mesmo nível de stress que você, saia da fila com ele. Quando os pares saiam, as vezes se formavam novos pares que também saíam. Quem ficou na fila?
 
