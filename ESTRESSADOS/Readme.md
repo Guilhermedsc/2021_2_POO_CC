@@ -950,6 +950,44 @@ int main() {
 ```
 
 - **maior_time**: Qual o maior time que apareceu na fila?
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+std::vector<int> maior_time(std::vector<int> vet) {
+    std::vector<int> vetpositivo;
+    std::vector<int> vetnegativo;
+    int contpositivo=0, contnegativo=0;
+   
+    for(int i=0; i < (int) vet.size() - 1; i++){ 
+        if(vet[i] > 0 && vet[i+1] > 0){
+           contpositivo++;
+           vetpositivo.push_back(vet[i]);
+        }
+        if(vet[i] < 0 && vet[i+1] < 0){
+           contnegativo++;
+           vetnegativo.push_back(vet[i]);
+        }
+    }
+
+    if(contpositivo > contnegativo){
+        return vetpositivo;
+    }else{
+        return vetnegativo;
+    }
+}
+
+int main() {
+    std::vector<int> vetaux = { maior_time({22, 7, 9, -5, -6, 33}) };
+
+    for(int i=0; i < (int) vetaux.size(); i++){
+        std::cout << vetaux[i] << " ";
+    }
+
+    return 0;
+}
+```
 - **sozinhos**: Quantas pessoas não estavam em um time?
 
 ### **Grupos**: 2 funções
