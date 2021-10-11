@@ -1048,5 +1048,32 @@ int main() {
 ```
 
 - **insert**: Como fica a fila se eu inserir a pessoa X na posição Y.
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+std::vector<int> remove(std::vector<int> vet, int x, int y) {
+    for(int i=0; i < (int) vet.size(); i++){
+        vet[y]=x;
+    }
+
+    return vet;
+}
+
+int main() {
+    int x=0, y=0;
+    std::cin >> x;
+    std::cin >> y;
+    std::vector<int> vetaux = { remove({1, 2, 3, -4, -9}, x, y)};
+
+    for(int i=0; i < (int) vetaux.size(); i++){
+        std::cout << vetaux[i] << " ";
+    }
+
+    return 0;
+}
+```
+
 - **dance**: O coordenador disse: se você está do lado de alguém da com o mesmo nível de stress que você, saia da fila com ele. Quando os pares saiam, as vezes se formavam novos pares que também saíam. Quem ficou na fila?
 
