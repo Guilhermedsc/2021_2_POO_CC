@@ -989,6 +989,30 @@ int main() {
 }
 ```
 - **sozinhos**: Quantas pessoas não estavam em um time?
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int sozinhos(std::vector<int> vet) {
+    int cont=0;
+    for(int i=0; i < (int) vet.size() - 1; i++){ 
+        if(vet[i] < 0 && (vet[i-1] > 0 && vet[i+1] > 0)){
+            cont++;
+        }
+        if(vet[i] > 0 && (vet[i-1] < 0 && vet[i+1] < 0)){
+            cont++;
+        }
+    }
+    return cont;
+}
+
+int main() {
+    std::cout << sozinhos({22, 7, -9, 5, -6, -33}) << '\n';
+
+    return 0;
+}
+```
 
 ### **Grupos**: 2 funções
 - **casais**: Casais são formados quando quando um homem e uma mulher com o mesmo nível de stress são formados. O 3 e o -3 formam um casal. Os participantes fossem orientados a sair da fila e procurar seu par. Quantos casais poderiam ser formados?
