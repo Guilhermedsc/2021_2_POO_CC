@@ -797,7 +797,67 @@ int main() {
 ```
 
 - **mais_recorrentes**: Quais os níveis de stress mais recorrentes. (abs)
-    - ```{1, 3, 4, 5, -1, -5, -5, 3, -3} -> {5, 3}```
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+std::vector<int> mais_recorrentes(std::vector<int> vet) {
+    std::vector<int> vetaux;
+    int cont_final=0;
+
+    for(int i=0; i < (int) vet.size(); i++){
+        vet[i]=std::abs(vet[i]);
+    }
+    
+    for(int i=0; i < (int) vet.size(); i++){ 
+        int cont=0;
+        for(int j=0; j < (int) vet.size(); j++){    
+              if(vet[i] == vet[j]){                     
+                cont++;
+              }
+        }
+        if(cont > cont_final){
+            cont_final=cont;
+        }
+    }
+
+    for(int i=0; i < (int) vet.size(); i++){
+        int cont=0;
+        for(int j=0; j < (int) vet.size(); j++){    
+              if(vet[i] == vet[j]){                     
+                cont++;
+              }
+        }
+        if(cont==cont_final){
+            vetaux.push_back(vet[i]);
+        }
+    }
+
+    for(int i=0; i < (int) vetaux.size(); i++){
+        int cont=0;
+        for(int j=0; j < (int) vetaux.size(); j++){    
+              if(vetaux[i] == vetaux[j]){                     
+                cont++;
+              }
+        }
+        if(cont==cont_final){
+            vetaux.erase(std::remove(vetaux.begin(), vetaux.end(), vetaux[i]), vetaux.end());
+        }
+    }
+    return vetaux;
+}
+
+int main() {
+    std::vector<int> vetaux = { mais_recorrentes({1, 3, 4, 5, -1, -5, -5, 3, -3}) };
+
+    for(int i=0; i < (int) vetaux.size(); i++){
+        std::cout << vetaux[i] << " ";
+    }
+
+    return 0;
+}
+```
 
 ### **Proximidade**: 2 funções
 - **briga**: Quando alguém super estressado(>50) está ao lado de duas pessoas muito estressadas(>30) pode dar briga. Quantas vezes essa situação acontece?
