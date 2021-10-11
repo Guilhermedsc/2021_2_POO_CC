@@ -923,6 +923,32 @@ int main() {
 
 ### **Sequências**: 3 funções
 - **quantos_times**: Duas ou mais pessoas do mesmo sexo seguidas podem formar um time. Quantos times existem na fila?
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int quantos_times(std::vector<int> vet) {
+    int cont=0;
+   
+    for(int i=0; i < (int) vet.size() - 1; i++){ 
+       if(vet[i] < 0 && vet[i+1] < 0){
+           cont++;
+       }
+       if(vet[i] > 0 && vet[i+1] > 0){
+           cont++;
+       }
+    }
+    return cont;
+}
+
+int main() {
+    std::cout << quantos_times({-9, -85, 22, 5, -83, -7}) <<'\n';
+
+    return 0;
+}
+```
+
 - **maior_time**: Qual o maior time que apareceu na fila?
 - **sozinhos**: Quantas pessoas não estavam em um time?
 
