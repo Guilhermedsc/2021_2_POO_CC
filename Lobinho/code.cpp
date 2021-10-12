@@ -90,9 +90,9 @@ sf::Texture loadTexture(std::string path)
 
 int main()
 {
-	sf::Texture wolf_tex { loadTexture("D:/CursoCC/POO/sfml-vscode-boilerplate-master/src/sketch/lobol.png") };
-	sf::Texture rabbit_tex { loadTexture("D:/CursoCC/POO/sfml-vscode-boilerplate-master/src/sketch/coelho.png") };
-	sf::Texture grass_tex { loadTexture("D:/CursoCC/POO/sfml-vscode-boilerplate-master/src/sketch/grama.jpg") };
+	sf::Texture wolf_tex { loadTexture("lobol.png") };
+    	sf::Texture rabbit_tex { loadTexture("coelho.png") };
+    	sf::Texture grass_tex { loadTexture("grama.jpg") };
 
 	const int STEP { 100 };
 
