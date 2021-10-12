@@ -1,7 +1,6 @@
-#include "Platform/Platform.hpp"
+#include <SFML/Graphics.hpp>
 #include <iostream>
 
-void setSize(sf::Sprite& sprite, int width, int height);
 void setSize(sf::Sprite& sprite, int width, int height)
 {
 	auto dim = sprite.getLocalBounds();
@@ -66,7 +65,6 @@ struct Board
 	}
 };
 
-void moveEntity(sf::Keyboard::Key key, Entity& entity, std::vector<sf::Keyboard::Key> move_keys);
 void moveEntity(sf::Keyboard::Key key, Entity& entity, std::vector<sf::Keyboard::Key> move_keys)
 {
 	if (key == move_keys[0])
@@ -79,7 +77,6 @@ void moveEntity(sf::Keyboard::Key key, Entity& entity, std::vector<sf::Keyboard:
 		entity.y++;
 }
 
-sf::Texture loadTexture(std::string path);
 sf::Texture loadTexture(std::string path)
 {
 	sf::Texture texture;
