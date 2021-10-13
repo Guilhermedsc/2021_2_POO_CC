@@ -1016,6 +1016,48 @@ int main() {
 
 ### **Grupos**: 2 funções
 - **casais**: Casais são formados quando quando um homem e uma mulher com o mesmo nível de stress são formados. O 3 e o -3 formam um casal. Os participantes fossem orientados a sair da fila e procurar seu par. Quantos casais poderiam ser formados?
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int casais(std::vector<int> vet) {
+    int cont=0;
+    std::vector<int> vetcopy;
+
+    for( int i=0; i < (int) vet.size(); i++){
+        vetcopy.push_back(vet[i]);
+    }
+
+    for(int i=0; i < (int) vet.size(); i++){
+        for(int j=0; j < (int) vetcopy.size(); j++){
+            if(vet[i] > 0){
+                if(vet[i] == vetcopy[j]){
+                    vetcopy[j]=0;
+                }
+           }
+        }
+    }
+
+    for(int i=0; i < (int) vet.size(); i++){
+        for(int j=0; j < (int) vetcopy.size(); j++){
+            if(vet[i] > 0){
+                if(vet[i] == std::abs(vetcopy[j])){
+                    cont++;
+                }
+           }
+        }
+    }
+    return cont;
+}
+
+int main() {
+    std::cout << casais({3, -3, 8, -8, 7, -7,}) << '\n';
+
+    return 0;
+}
+```
+
 - **trios**: Pedimos pros participantes se organizassem em trios. Todos os 3 deveriam estar com o mesmo nível de stress.Quantos trios podem ser formados?
 
 ### **Alteração**: 3 funções
