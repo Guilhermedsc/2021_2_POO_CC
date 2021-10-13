@@ -1095,7 +1095,7 @@ int main() {
 #include <vector>
 #include <algorithm>
 
-std::vector<int> remove(std::vector<int> vet, int x, int y) {
+std::vector<int> insert(std::vector<int> vet, int x, int y) {
     for(int i=0; i < (int) vet.size(); i++){
         vet[y]=x;
     }
@@ -1107,7 +1107,7 @@ int main() {
     int x=0, y=0;
     std::cin >> x;
     std::cin >> y;
-    std::vector<int> vetaux = { remove({1, 2, 3, -4, -9}, x, y)};
+    std::vector<int> vetaux = { insert({1, 2, 3, -4, -9}, x, y)};
 
     for(int i=0; i < (int) vetaux.size(); i++){
         std::cout << vetaux[i] << " ";
