@@ -5,7 +5,7 @@
 - [Requisitos](#requisitos)
 - [Shell](#shell)
 - [Diagrama](#diagrama)
-- [Esqueleto Java](#esqueleto java)
+- [Esqueleto](#esqueleto)
 - [Resolução](#resolução)
 <!--TOC_END-->
 
@@ -110,7 +110,7 @@ $end
 ![](diagrama.png)
 
 ***
-## Esqueleto Java
+## Esqueleto
 
 <!--FILTER Solver.java java-->
 ```java
