@@ -226,6 +226,90 @@ class Manual {
 
 ## Resolução
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+struct Grafite{
+    float calibre;
+    std::string dureza;
+    int tamanho;
+
+    Grafite(float calibre = 0, std::string dureza = "", int tamanho = 0) : 
+        calibre{calibre}, dureza{dureza}, tamanho{tamanho}{}
+
+    friend std::ostream& operator<<(std::ostream& os, const Grafite& grafite){
+        os << "Calibre: " <<grafite.calibre << " mm, ";
+        os << "Dureza: " <<grafite.dureza << ", ";
+        os << "Tamanho: " <<grafite.tamanho << " mm\n";
+        return os;
+    }
+};
+
+struct Lapiseira{
+    float calibre;
+    Grafite* grafite;
+
+    Lapiseira(float calibre, Grafite* grafite = nullptr) : 
+        calibre{calibre}, grafite{grafite}{}
+
+    bool inserir_grafite(Grafite* grafite){
+        if(this->grafite != nullptr){
+            std::cout << "Ja tem grafite\n";
+            return false;
+        }
+        if(grafite->calibre != this->calibre){
+            std::cout << "Calibre incompativel\n";
+            return false;
+        }
+        this->grafite = grafite;
+        return true;
+    }
+
+    Grafite* removerGrafite(){
+        if(this->grafite == nullptr){
+            std::cout << "Nao tem grafite\n";
+            return nullptr;
+        }
+        return std::exchange(this->grafite, nullptr);
+    }
+
+    Grafite* escrever_folha(){
+        if(this->grafite == nullptr){
+            std::cout << "Nao tem grafite\n";
+            return nullptr;
+        }
+    }
+};
+
+int main(){
+    Grafite grafite (10, "HB", 10);
+    Lapiseira lapiseira (0.5, &grafite);
+
+    int folhas=4;
+    for (int i = 0; i < folhas; i++){
+        if(grafite.dureza == "HB"){
+            grafite.tamanho-=1;
+            folhas-=1;
+        }else if(grafite.dureza == "2B"){
+            grafite.tamanho-=2;
+            folhas-=1;
+        }else if(grafite.dureza == "4B"){
+            grafite.tamanho-=4;
+            folhas-=1;
+        }else if(grafite.dureza == "6B"){
+            grafite.tamanho-=6;
+            folhas-=1;
+        }
+
+        if(grafite.tamanho == 0){
+            std::cout << "Grafite acabou\n";
+            Grafite* grafite = nullptr;
+            folhas=0;
+        }
+    }
+    
+    return 0;
+}
 ```
 <!--FILTER_END-->
