@@ -272,5 +272,5 @@ class Manual{
     }
 }
 ```
-
+## [Resolução](motoca.cpp)
 <!--FILTER_END-->
