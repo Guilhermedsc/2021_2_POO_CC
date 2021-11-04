@@ -88,16 +88,14 @@ struct LAPISEIRA{
     }
 };
 
-void controlar(LAPISEIRA &lapiseira){
-    string L{""};
-
-    while(true){
-        cout << "[COMANDO] ";
-        string L;
-        cin >> L;
-        stringstream cc(L);
-        string cmd;
-        cc >> cmd;
+int main(){
+    LAPISEIRA lapiseira;
+    
+    string L;
+    cin >> L;
+    stringstream cc(L);
+    string cmd;
+    cc >> cmd;
 
         if(cmd == "iniciar"){
             float calibre;
@@ -121,15 +119,7 @@ void controlar(LAPISEIRA &lapiseira){
             int folhas;
             cc >> folhas;
             lapiseira.escrever_folha(folhas);
-        }else{
-            cout << "ERROR" << endl;
-        }
-    }
-}
-
-int main(){
-    LAPISEIRA lapizeira;
-    controlar(lapizeira);
+        }else cout << "ERROR" << endl;
 
     return 0;
 }
