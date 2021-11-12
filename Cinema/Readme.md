@@ -9,7 +9,7 @@
 
 O objetivo dessa atividade é implementar o sistema de alocação de uma única sala de cinema. Se existem cadeiras livres, os clientes podem reservá-las. Também podem desistir da reserva. O sistema deve mostrar quem está sentado em cada cadeira.
 
-Nessa atividade, você deverá criar:
+Nessa atividade, você deverá criar:.
 
 1. Uma classe que representa o cliente.
 2. Uma classe que representa a sala de cinema e guarda os clientes.
