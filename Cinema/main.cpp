@@ -52,8 +52,9 @@ public:
     shared_ptr<CLIENT> remover(string nome) {       
         for(auto &c : cadeiras) {
             if (c != nullptr && c->getNome() == nome) {
+                shared_ptr<CLIENT> pessoa = c;
                 c = nullptr;
-                return c;
+                return pessoa;
             }
         }
         cout << "Cliente nao esta no cinema" << endl;
