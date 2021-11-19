@@ -84,7 +84,13 @@ int main() {
         cout << "\n$ ";
         cin >> cmd;
 
-        if(cmd == "inserir"){
+        if (cmd == "init"){
+            int tsala=0;
+            cin >> tsala;
+            test = SALA(tsala);
+            cout << test << endl;
+
+        } else if(cmd == "add"){
             cin >> nome >> telefone >> index;
             test.inserir(make_shared<CLIENT>(nome, telefone), index);
             cout << test << endl;
@@ -100,7 +106,5 @@ int main() {
         } else {
             cout << "Comando invalido" << endl;
         }
-    }
-        
-    
+    }    
 }
