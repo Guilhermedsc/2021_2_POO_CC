@@ -20,7 +20,7 @@ public:
 };
 
 class CONTATO{
-    vector<FONE> fones;
+    list<FONE> fones;
     string nome;
 
     //bool
@@ -51,19 +51,20 @@ public:
     }
 
     void remover(int indice){
-        for(int i=0; i<fones.size(); i++){
-            if(i == indice){
-                fones.erase(fones.begin() + i);
+        for(auto it = fones.begin(); it != fones.end(); it++){
+            if(indice == distance(fones.begin(), it)){
+                fones.erase(it);
+                break;
             }
         }
     }
 
     void imprimir(){
         cout << nome << "  ";
-        for(int i=0; i<fones.size(); i++){
+        for(auto it = fones.begin(); it != fones.end(); it++){
             cout << "[ ";
-            cout << i << ":";
-            cout << fones[i] << " ";
+            cout << distance(fones.begin(), it) << ":";
+            cout << *it << " ";
             cout << "]";
         }
         cout << endl;
