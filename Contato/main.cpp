@@ -27,7 +27,7 @@ class CONTATO{
     int validarNumero(string number){
         int temLetra;
         for(int i=0; i<number.size(); i++){
-            if(number[i] >= 48 && number[i] <= 57){
+            if((number[i] >= 48 && number[i] <= 57) || number[i] == '.' || number[i] == '-' || number[i] == '(' || number[i] == ')'){
                 temLetra=0;
             }else{
                 temLetra=1;
