@@ -147,7 +147,7 @@ void ajuda(){
     cout << "\nComandos:" << endl;
     cout << "   add <nome> <operadora> <numero>, informe a quantidade de numeros a ser adcionados antes" << endl;
     cout << "   delete <nome> <indiceFone>, coloque indice como -1 para apagar o contato inteiro" << endl;
-    cout << "   bucar <padrao>" << endl;
+    cout << "   busca <padrao>" << endl;
     cout << "   print -> para mostra os contatos" << endl;
     cout << "   exit -> para sair" << endl;
 }
@@ -192,7 +192,7 @@ int main(){
             cin >> nome >> indice;
             agenda.removerContato(nome, indice);
 
-        } else if(cmd == "buscar"){
+        } else if(cmd == "busca"){
             cin >> padrao;
             agenda.busca(padrao);
 
