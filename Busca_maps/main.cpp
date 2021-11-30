@@ -109,7 +109,7 @@ public:
         }
     }
 
-    void buscar(string padrao){
+    void busca(string padrao){
         vector<CONTATO> aux;
         for(auto it = contatos.begin(); it != contatos.end(); it++){
             for(int i=0; i<it->second.getFones().size(); i++){
@@ -140,24 +140,66 @@ public:
     }    
 };
 
+void ajuda(){
+    cout << "\nComandos:" << endl;
+    cout << "   add <nome> <operadora> <numero>, informe a quantidade de numeros a ser adcionados antes" << endl;
+    cout << "   delete <nome> <indiceFone>, coloque indice como -1 para apagar o contato inteiro" << endl;
+    cout << "   busca <padrao>" << endl;
+    cout << "   print -> para mostra os contatos" << endl;
+    cout << "   exit -> para sair" << endl;
+}
+
 int main(){
     AGENDA agenda;
 
-    CONTATO pessoa("guilheana");
-    pessoa.addFone("tim", "9880");
-    pessoa.addFone("ihrfu", "455");   
+    CONTATO pessoa("guilherme");
+    pessoa.addFone("tim", "988");
+    pessoa.addFone("tim", "455");   
     agenda.addContato(pessoa);
 
     pessoa = CONTATO("ana");
-    pessoa.addFone("oi", "988");
+    pessoa.addFone("oi", "111");
     pessoa.addFone("claro", "988");
     agenda.addContato(pessoa);
+    
+    cout << "Digite ajuda para mostra os comandos";
+    while (true){
+        string cmd, nome, operadora, numero, padrao;
+        int indice=0, n=0;
+        cout << "\n$ ";
+        cin >> cmd;
 
-    //agenda.imprimirAgenda();
+        if(cmd == "add"){
+            cin >> n;
+            for(int i=0; i<n; i++){
+                cin >> nome;
+                cin >> operadora >> numero;
+                pessoa = CONTATO(nome);
+                pessoa.addFone(operadora, numero);
+                agenda.addContato(pessoa);
+            }
 
-    agenda.buscar("ana");
-    
-    
-    
+        } else if(cmd == "print"){
+            agenda.imprimirAgenda();
+
+        } else if(cmd == "exit"){
+            break;
+
+        } else if(cmd == "delete"){
+            cin >> nome >> indice;
+            agenda.removerContato(nome, indice);
+
+        } else if(cmd == "busca"){
+            cin >> padrao;
+            agenda.busca(padrao);
+
+        } else if(cmd == "ajuda"){
+            ajuda();
+
+        } else {
+            cout << "Comando invalido" << endl;
+
+        }
+    }
     return 0;   
 }
