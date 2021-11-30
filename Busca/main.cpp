@@ -112,27 +112,18 @@ public:
         }
     }
 
-    void busca(string padrao){      //Nota mental: revazer de uma maneira melhor depois
+    void buscar(string padrao){
         vector<CONTATO> aux;
+        for(auto it = contatos.begin(); it != contatos.end(); it++){
+            for(int i=0; i<it->second.getFones().size(); i++){
+                if(it->second.getFones()[i].getNumero().find(padrao) != string::npos || it->second.getFones()[i].getOperadora().find(padrao) != string::npos){
+                    aux.push_back(it->second);
+                    break;
 
-        for(int i=0; i<contatos.size(); i++){
-            for(int j=0; j<contatos[i].getFones().size(); j++){
-                if(contatos[i].getNome().find(padrao) != string::npos || contatos[i].getFones()[j].getNumero().find(padrao) != string::npos || contatos[i].getFones()[j].getOperadora().find(padrao) != string::npos){
-                    aux.push_back(contatos[i]);
-                }
-            }
-        }
-
-        int cont=0;
-        for(int i=0; i<aux.size(); i++){
-            for(int j=0; j<aux.size(); j++){
-                if(aux[i].getNome() == aux[j].getNome()){
-                    cont++;
-                }
-                if(cont == 2){
-                    aux.erase(aux.begin()+i);
-                    cont=0;
-                }
+                }else if(it->first.find(padrao) != string::npos){
+                    aux.push_back(it->second);
+                    break;
+                }                
             }
         }
 
@@ -141,7 +132,7 @@ public:
             aux[i].imprimir();
             cout << endl;
         }
-        aux.clear();
+        aux.clear();     
     }
 
     void imprimirAgenda(){
