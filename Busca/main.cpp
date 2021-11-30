@@ -23,7 +23,7 @@ class CONTATO{
     vector<FONE> fones;
     string nome;
 
-    //bool-
+    //bool
     int validarNumero(string number){
         int temLetra;
         for(int i=0; i<number.size(); i++){
@@ -112,18 +112,17 @@ public:
         }
     }
 
-    void buscar(string padrao){
+    void busca(string padrao){
         vector<CONTATO> aux;
-        for(auto it = contatos.begin(); it != contatos.end(); it++){
-            for(int i=0; i<it->second.getFones().size(); i++){
-                if(it->second.getFones()[i].getNumero().find(padrao) != string::npos || it->second.getFones()[i].getOperadora().find(padrao) != string::npos){
-                    aux.push_back(it->second);
+        for(int i=0; i<contatos.size(); i++){
+            for(int j=0; j<contatos[i].getFones().size(); j++){
+                if(contatos[i].getFones()[j].getNumero().find(padrao) != string::npos || contatos[i].getFones()[j].getOperadora().find(padrao) != string::npos){
+                    aux.push_back(contatos[i]);
                     break;
-
-                }else if(it->first.find(padrao) != string::npos){
-                    aux.push_back(it->second);
+                }else if(contatos[i].getNome().find(padrao) != string::npos){
+                    aux.push_back(contatos[i]);
                     break;
-                }                
+                }
             }
         }
 
@@ -132,7 +131,7 @@ public:
             aux[i].imprimir();
             cout << endl;
         }
-        aux.clear();     
+        aux.clear();
     }
 
     void imprimirAgenda(){
