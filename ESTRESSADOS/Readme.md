@@ -564,7 +564,7 @@ int sortear(std::vector<int> vet) {
     srand(time(NULL));
     int n;
     
-    n=0+(rand()%5);
+    n=0+(rand()%5);	//sorteia um n de 0 a 5
 
     return vet[n];
 }
