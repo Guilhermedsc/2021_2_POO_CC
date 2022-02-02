@@ -20,14 +20,14 @@ public:
 };
 
 class CONTATO{
-    vector<FONE> fones;
+    list<FONE> fones;
     string nome;
 
     //bool
     int validarNumero(string number){
         int temLetra;
         for(int i=0; i<number.size(); i++){
-            if(number[i] >= 48 && number[i] <= 57){
+            if((number[i] >= 48 && number[i] <= 57) || number[i] == '.' || number[i] == '-' || number[i] == '(' || number[i] == ')'){
                 temLetra=0;
             }else{
                 temLetra=1;
@@ -51,19 +51,20 @@ public:
     }
 
     void remover(int indice){
-        for(int i=0; i<fones.size(); i++){
-            if(i == indice){
-                fones.erase(fones.begin() + i);
+        for(auto it = fones.begin(); it != fones.end(); it++){
+            if(indice == distance(fones.begin(), it)){
+                fones.erase(it);
+                break;
             }
         }
     }
 
     void imprimir(){
         cout << nome << "  ";
-        for(int i=0; i<fones.size(); i++){
+        for(auto it = fones.begin(); it != fones.end(); it++){
             cout << "[ ";
-            cout << i << ":";
-            cout << fones[i] << " ";
+            cout << distance(fones.begin(), it) << ":";
+            cout << *it << " ";
             cout << "]";
         }
         cout << endl;
@@ -71,7 +72,7 @@ public:
 };
 
 int main(){
-    CONTATO pessoa("ze");
+    CONTATO pessoa("guilherme");
     
     while(true){
         string cmd, nome, operadora, numero;

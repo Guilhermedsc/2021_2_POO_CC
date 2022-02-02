@@ -74,38 +74,35 @@ public:
 };
 
 class AGENDA{
-    vector<CONTATO> contatos;
+    map<string, CONTATO> contatos;
 
 public:
     AGENDA() {}
 
     void addContato(CONTATO contato){
-        for(int i=0; i<contatos.size(); i++){
-            if(contatos[i].getNome() == contato.getNome()){
-                for(int j=0; j<contato.getFones().size(); j++){
-                    contatos[i].addFone(contato.getFones()[j].getOperadora(), contato.getFones()[j].getNumero());
-                }                               
+        for(auto it = contatos.begin(); it != contatos.end(); it++){
+            if(it->first == contato.getNome()){
+                for(int i=0; i<contato.getFones().size(); i++){
+                    it->second.addFone(contato.getFones()[i].getOperadora(), contato.getFones()[i].getNumero());
+                }
                 return;
             }
         }
-        contatos.push_back(contato);
-        sort(contatos.begin(), contatos.end(), [](CONTATO a, CONTATO b){
-            return a.getNome() < b.getNome();
-        });
+        contatos.insert(pair<string, CONTATO>(contato.getNome(), contato));        
     }
 
-    void removerContato(string nome, int indiceFone){
-        if(indiceFone == -1){
-            for(int i=0; i<contatos.size(); i++){
-                if(contatos[i].getNome() == nome){
-                    contatos.erase(contatos.begin()+i);
+    void removerContato(string nome, int indice){
+        if(indice == -1){
+            for(auto it = contatos.begin(); it != contatos.end(); it++){
+                if(it->first == nome){
+                    contatos.erase(it);
                     return;
                 }
             }
         }else{
-            for(int i=0; i<contatos.size(); i++){
-                if(contatos[i].getNome() == nome){
-                    contatos[i].remover(indiceFone);
+            for(auto it = contatos.begin(); it != contatos.end(); it++){
+                if(it->first == nome){
+                    it->second.remover(indice);
                     return;
                 }
             }
@@ -114,15 +111,16 @@ public:
 
     void busca(string padrao){
         vector<CONTATO> aux;
-        for(int i=0; i<contatos.size(); i++){
-            for(int j=0; j<contatos[i].getFones().size(); j++){
-                if(contatos[i].getFones()[j].getNumero().find(padrao) != string::npos || contatos[i].getFones()[j].getOperadora().find(padrao) != string::npos){
-                    aux.push_back(contatos[i]);
+        for(auto it = contatos.begin(); it != contatos.end(); it++){
+            for(int i=0; i<it->second.getFones().size(); i++){
+                if(it->second.getFones()[i].getNumero().find(padrao) != string::npos || it->second.getFones()[i].getOperadora().find(padrao) != string::npos){
+                    aux.push_back(it->second);
                     break;
-                }else if(contatos[i].getNome().find(padrao) != string::npos){
-                    aux.push_back(contatos[i]);
+
+                }else if(it->first.find(padrao) != string::npos){
+                    aux.push_back(it->second);
                     break;
-                }
+                }                
             }
         }
 
@@ -131,16 +129,15 @@ public:
             aux[i].imprimir();
             cout << endl;
         }
-        aux.clear();
+        aux.clear();     
     }
 
     void imprimirAgenda(){
-        for(int i=0; i<contatos.size(); i++){
-            cout << "- ";
-            contatos[i].imprimir();
+        for(auto it = contatos.begin(); it != contatos.end(); it++){
+            it->second.imprimir();
             cout << endl;
         }
-    }
+    }    
 };
 
 void ajuda(){
@@ -164,7 +161,7 @@ int main(){
     pessoa.addFone("oi", "111");
     pessoa.addFone("claro", "988");
     agenda.addContato(pessoa);
-        
+    
     cout << "Digite ajuda para mostra os comandos";
     while (true){
         string cmd, nome, operadora, numero, padrao;
@@ -204,6 +201,5 @@ int main(){
 
         }
     }
-    
     return 0;   
 }
