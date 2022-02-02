@@ -31,13 +31,8 @@ public:
 
     virtual void at_mensal() = 0;
 
-    void transferir(CONTA &destino, float valor){
-        if(this->saldo < valor){
-            cout << "\nSaldo insuficiente" << endl;
-            return;
-        }
-        this->sacar(valor);
-        destino.depositar(valor);
+    void transferir(){
+        
     }   
 
     float getSaldo(){
@@ -163,20 +158,8 @@ public:
         }
     }
 
-    void tranferir(int contaID1, int contaID2, float valor){
-        for(auto &conta1: contas){
-            if(conta1->getId() == contaID1){
-                for(auto &conta2: contas){
-                    if(conta2->getId() == contaID2){
-                        conta1->transferir(*conta2, valor);
-                        return;
-                    }
-               }
-                cout << "\nConta nao encontrada" << endl;
-                return;
-            }
-        }
-        cout << "\nConta nao encontrada" << endl;
+    void tranferir(){
+        
     }
 
     void imprime_contas_clientes(){
@@ -204,16 +187,8 @@ int main(){
     ag.addCliente("Maria");
     ag.imprime_contas_clientes();
 
-    //transferindo
-    ag.tranferir(1, 2, 100);
-    ag.imprime_contas_clientes();
-
     //depositando
     ag.depositar(1, 100);
-    ag.imprime_contas_clientes();
-
-    //transferindo certo
-    ag.tranferir(1, 2, 100);
     ag.imprime_contas_clientes();
 
     //sacando
