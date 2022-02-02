@@ -1,4 +1,4 @@
-# 2021_2_POO_CC
+# 2021_2_POO_CC_organizado
 
 ## Configurando github e IDE
 
