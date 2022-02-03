@@ -31,9 +31,20 @@ public:
 
     virtual void at_mensal() = 0;
 
-    void transferir(){
-        
-    }   
+    void transferir(CONTA &destino, float valor){
+        if(this->saldo < valor){
+            cout << "\nSaldo insuficiente" << endl;
+            return;
+        }else if(destino.id == this->id){
+            cout << "\nMesma conta" << endl;
+            return;
+        }else if(valor <= 0){
+            cout << "\nValor invalido" << endl;
+            return;
+        }
+        this->sacar(valor);
+        destino.depositar(valor);
+    }  
 
     float getSaldo(){
         return this->saldo;
@@ -49,6 +60,10 @@ public:
 
     string getTipo(){
         return this->tipo;
+    }
+
+    void imprimirC(){
+        cout << id << ":" << clienteID << ":" << saldo << ":" << tipo << endl;
     }
 
     virtual ~CONTA(){
@@ -107,75 +122,89 @@ public:
     void setNomeID(string nomeID){
         this->nomeID = nomeID;
     }
+
+    void imprimirCli(){
+        cout << "- " << nomeID << " ";
+        for(int i=0; i<contas.size(); i++){
+            cout << "[";
+            cout << contas[i]->getId();
+            cout << "] ";
+        }
+        cout << endl;
+    }
 };
 
 class AGENCIA{
 private:
-    vector<shared_ptr<CLIENTE>> clientes;
-    vector<shared_ptr<CONTA>> contas;
+    map<string, shared_ptr<CLIENTE>> clientes;
+    map<int, shared_ptr<CONTA>> contas;
 public:
     AGENCIA(){
     }
 
-    void addCliente(string clienteID){
+    void addCliente(string clienteID){    
         shared_ptr<CLIENTE> cliente = make_shared<CLIENTE>(clienteID);
-        clientes.push_back(cliente);
+        clientes.insert(pair<string, shared_ptr<CLIENTE>>(clienteID, cliente));
 
         int N = contas.size(), n1 = N+1, n2 = N+2;
 
-        shared_ptr<CONTA> contaP = make_shared<POUPANCA>(0, clienteID, n1, "POUPANCA");
-            cliente->addConta(contaP);
-            contas.push_back(contaP);
+        shared_ptr<CONTA> contaP = make_shared<POUPANCA>(0, clienteID, n1, "CP");
+        cliente->addConta(contaP);
+        contas.insert(pair<int, shared_ptr<CONTA>>(n1, contaP));
 
-        shared_ptr<CONTA> contaC = make_shared<CORRENTE>(0, clienteID, n2, "CORRENTE");
-            cliente->addConta(contaC);
-            contas.push_back(contaC);
+        shared_ptr<CONTA> contaC = make_shared<CORRENTE>(0, clienteID, n2, "CC");
+        cliente->addConta(contaC);
+        contas.insert(pair<int, shared_ptr<CONTA>>(n2, contaC));
     }
 
     void depositar(int contaID, float valor){
-        for(auto &conta: contas){
-            if(conta->getId() == contaID){
-                conta->depositar(valor);
-                return;
-            }
+        auto it = contas.find(contaID);
+
+        if(it != contas.end()){
+            it->second->depositar(valor);
+            return;
         }
         cout << "\nConta nao encontrada" << endl;
     }
 
     void sacar(int contaID, float valor){
-        for(auto &conta: contas){
-            if(conta->getId() == contaID){
-                conta->sacar(valor);
-                return;
-            }
+        auto it = contas.find(contaID);
+
+        if(it != contas.end()){
+            it->second->sacar(valor);
+            return;
         }
         cout << "\nConta nao encontrada" << endl;
     }
 
     void at_mensal_ag(){
-        for(auto &conta: contas){
-            conta->at_mensal();
+        for(auto it = contas.begin(); it != contas.end(); it++){
+            it->second->at_mensal();
         }
     }
 
-    void tranferir(){
-        
+    void transferir(int contaID1, int contaID2, float valor){
+        auto it1 = contas.find(contaID1);
+        auto it2 = contas.find(contaID2);
+
+        if(it1 != contas.end() && it2 != contas.end()){
+            it1->second->transferir(*it2->second, valor);
+            return;
+        }
+        cout << "\nConta nao encontrada" << endl;
     }
 
     void imprime_contas_clientes(){
         cout << "\nClientes:" << endl;
-        for(int i=0; i<clientes.size(); i++){
-            cout << "- " << clientes[i]->getNomeID() << " ";
-            for(int j=0; j<clientes[i]->getContas().size(); j++){
-                cout << "[" << clientes[i]->getContas()[j]->getId() << "]" << " ";
-            }
-            cout << endl;
+        for(auto &cliente: clientes){
+            cliente.second->imprimirCli();
         }
 
         cout << "\nContas:" << endl;
-        for(int i=0; i<contas.size(); i++){
-            cout << contas[i]->getId() << ":" << contas[i]->getClienteID() << ":" << contas[i]->getSaldo() << ":" << contas[i]->getTipo() << endl;
+        for(auto &conta: contas){
+            conta.second->imprimirC();
         }
+
     }
 };
 
@@ -188,14 +217,20 @@ int main(){
     ag.imprime_contas_clientes();
 
     //depositando
-    ag.depositar(1, 100);
+    ag.depositar(1, 150);
+    ag.depositar(2, 100);
     ag.imprime_contas_clientes();
 
     //sacando
+    ag.sacar(1, 50);
     ag.sacar(2, 50);
     ag.imprime_contas_clientes();
 
     //atualizando mensalmente
     ag.at_mensal_ag();
+    ag.imprime_contas_clientes();
+
+    //transferindo
+    ag.transferir(1, 2, 50);
     ag.imprime_contas_clientes();
 }
