@@ -76,38 +76,45 @@ public:
 class AGENDA{
     vector<CONTATO> contatos;
 
+    int getContatos(string nome){
+        for(int i=0; i<contatos.size(); i++){
+            if(contatos[i].getNome() == nome){
+                return i;
+            }
+        }
+        return -1;
+    }
+
 public:
     AGENDA() {}
 
-    void addContato(CONTATO contato){
-        for(int i=0; i<contatos.size(); i++){
-            if(contatos[i].getNome() == contato.getNome()){
-                for(int j=0; j<contato.getFones().size(); j++){
-                    contatos[i].addFone(contato.getFones()[j].getOperadora(), contato.getFones()[j].getNumero());
-                }                               
-                return;
-            }
+    void addContato(CONTATO contato){        
+        int pos = getContatos(contato.getNome());
+        
+        if(pos == -1){
+            contatos.push_back(contato);
+            sort(contatos.begin(), contatos.end(), [](CONTATO a, CONTATO b){
+                return a.getNome() < b.getNome();
+            });
+        }else{
+            for(int j=0; j<contato.getFones().size(); j++){
+                contatos[pos].addFone(contato.getFones()[j].getOperadora(), contato.getFones()[j].getNumero());
+            }  
         }
-        contatos.push_back(contato);
-        sort(contatos.begin(), contatos.end(), [](CONTATO a, CONTATO b){
-            return a.getNome() < b.getNome();
-        });
     }
 
     void removerContato(string nome, int indiceFone){
+        int pos = getContatos(nome);
+
         if(indiceFone == -1){
-            for(int i=0; i<contatos.size(); i++){
-                if(contatos[i].getNome() == nome){
-                    contatos.erase(contatos.begin()+i);
-                    return;
-                }
+            if(pos != -1){
+                contatos.erase(contatos.begin()+pos);
+                return;
             }
         }else{
-            for(int i=0; i<contatos.size(); i++){
-                if(contatos[i].getNome() == nome){
-                    contatos[i].remover(indiceFone);
-                    return;
-                }
+            if(pos != -1){
+                contatos[pos].remover(indiceFone);
+                return;
             }
         }
     }
