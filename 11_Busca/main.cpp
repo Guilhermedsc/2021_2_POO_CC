@@ -23,7 +23,6 @@ class CONTATO{
     vector<FONE> fones;
     string nome;
 
-    //bool
     int validarNumero(string number){
         int temLetra;
         for(int i=0; i<number.size(); i++){

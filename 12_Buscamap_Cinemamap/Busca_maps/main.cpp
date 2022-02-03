@@ -23,7 +23,6 @@ class CONTATO{
     vector<FONE> fones;
     string nome;
 
-    //bool
     int validarNumero(string number){
         int temLetra;
         for(int i=0; i<number.size(); i++){
@@ -79,33 +78,27 @@ class AGENDA{
 public:
     AGENDA() {}
 
-    void addContato(CONTATO contato){
-        for(auto it = contatos.begin(); it != contatos.end(); it++){
-            if(it->first == contato.getNome()){
-                for(int i=0; i<contato.getFones().size(); i++){
-                    it->second.addFone(contato.getFones()[i].getOperadora(), contato.getFones()[i].getNumero());
-                }
-                return;
+    void addContato(CONTATO contato){       
+        auto it = contatos.find(contato.getNome());
+
+        if(it != contatos.end()){
+            for(int i=0; i<contato.getFones().size(); i++){
+                it->second.addFone(contato.getFones()[i].getOperadora(), contato.getFones()[i].getNumero());
             }
+            return;
         }
-        contatos.insert(pair<string, CONTATO>(contato.getNome(), contato));        
+        contatos.insert(pair<string, CONTATO>(contato.getNome(), contato));
     }
 
     void removerContato(string nome, int indice){
+        auto it = contatos.find(nome);
+
         if(indice == -1){
-            for(auto it = contatos.begin(); it != contatos.end(); it++){
-                if(it->first == nome){
-                    contatos.erase(it);
-                    return;
-                }
-            }
+            contatos.erase(it);
+            return;
         }else{
-            for(auto it = contatos.begin(); it != contatos.end(); it++){
-                if(it->first == nome){
-                    it->second.remover(indice);
-                    return;
-                }
-            }
+            it->second.remover(indice);
+            return;
         }
     }
 
