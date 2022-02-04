@@ -61,7 +61,6 @@ public:
         auto it = pacientes.find(nome);
 
         if(it == pacientes.end()){
-            cout << "Paciente nao encontrado" << endl;
             return;
         }
         PACIENTE *paciente = it->second;
@@ -99,8 +98,8 @@ void PACIENTE::addMedico(MEDICO *medico){
         return;
     }
 
-    for(auto it = medicos.begin(); it != medicos.end(); it++){
-        if(it->second->getEspecialidade() == medico->getEspecialidade()){
+    for(auto &i : medicos){
+        if(i.second->getEspecialidade() == medico->getEspecialidade()){
             cout << "Medico com essa especialidade ja existe\n" << endl;
             return;
         }
@@ -113,7 +112,6 @@ void PACIENTE::rmMedico(string nome){
     auto it = medicos.find(nome);
 
     if(it == medicos.end()){
-        cout << "Medico nao encontrado" << endl;
         return;
     }
     MEDICO *medico = it->second;
@@ -209,19 +207,19 @@ int main(){
 
     sistema.addMedico(new MEDICO("DrFelipe", "1"));
     sistema.addMedico(new MEDICO("DrJunior", "2"));
-    //sistema.addMedico(new MEDICO("Dr", "1"));
+    sistema.addMedico(new MEDICO("Dr", "1"));
 
     sistema.IMPRIMIR();
     cout << endl;
 
     sistema.vincular("ze", "DrFelipe");
     sistema.vincular("luis", "DrJunior");
-    //sistema.vincular("ze", "Dr");
+    sistema.vincular("ze", "Dr");
 
     sistema.IMPRIMIR();
     cout << endl;
 
-    sistema.desvincular("ze", "DrFelipe");
+    sistema.desvincular("luis", "DrJunior");
 
     sistema.IMPRIMIR();
 }
