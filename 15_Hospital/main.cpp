@@ -171,7 +171,7 @@ public:
         auto itM = medicos.find(nomeM);
 
         if(itP != pacientes.end() && itM != medicos.end()){
-            itP->second->addMedico(itM->second);    // &(*itM->second) -> pega o endereco do medico
+            itP->second->addMedico(itM->second);
             return;
         }
         cout << "Paciente ou medico nao encontrado" << endl;
