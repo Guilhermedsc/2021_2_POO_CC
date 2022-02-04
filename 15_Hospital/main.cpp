@@ -11,7 +11,7 @@ public:
     PACIENTE(string nome, string diagnostico) : nome(nome), diagnostico(diagnostico){
     }
 
-    void addMedico(MEDICO* medico);
+    void addMedico(MEDICO *medico);
 
     void rmMedico(string nome);
 
@@ -23,12 +23,8 @@ public:
         return this->diagnostico;
     }
 
-    string getMedicos(){
-        string medicos;
-        for(auto it = this->medicos.begin(); it != this->medicos.end(); it++){
-            medicos += it->first + " ";
-        }
-        return medicos;
+    map<string, MEDICO*> getMedicos(){
+        return this->medicos;
     }
 
     void IMPRIMIRpaciente(){
@@ -51,9 +47,27 @@ public:
     MEDICO(string nome, string especialidade) : nome(nome), especialidade(especialidade){
     }
 
-    void addPaciente(PACIENTE* paciente);
+    void addPaciente(PACIENTE *paciente){
+        auto key = paciente->getNome();
 
-    void rmPaciente(string nome);
+        if(pacientes.find(key) != pacientes.end()){
+            return;
+        }
+        this->pacientes[key] = paciente;
+        paciente->addMedico(this);
+    }
+
+    void rmPaciente(string nome){
+        auto it = pacientes.find(nome);
+
+        if(it == pacientes.end()){
+            cout << "Paciente nao encontrado" << endl;
+            return;
+        }
+        PACIENTE *paciente = it->second;
+        this->pacientes.erase(it);
+        paciente->rmMedico(this->nome);
+    }
 
     string getNome(){
         return this->nome;
@@ -63,12 +77,8 @@ public:
         return this->especialidade;
     }
 
-    string getPacientes(){
-        string pacientes;
-        for(auto it = this->pacientes.begin(); it != this->pacientes.end(); it++){
-            pacientes += it->first + " ";
-        }
-        return pacientes;
+    map<string, PACIENTE*> getPacientes(){
+        return this->pacientes;
     }
 
     void IMPRIMIRmedico(){
@@ -82,20 +92,33 @@ public:
     }
 };
 
-void PACIENTE::addMedico(MEDICO* medico){
-    this->medicos[medico->getNome()] = medico;
-}
+void PACIENTE::addMedico(MEDICO *medico){
+    auto key = medico->getNome();
 
-void MEDICO::addPaciente(PACIENTE* paciente){
-    this->pacientes[paciente->getNome()] = paciente;
+    if(medicos.find(key) != medicos.end()){
+        return;
+    }
+
+    for(auto it = medicos.begin(); it != medicos.end(); it++){
+        if(it->second->getEspecialidade() == medico->getEspecialidade()){
+            cout << "Medico com essa especialidade ja existe\n" << endl;
+            return;
+        }
+    }
+    this->medicos[key] = medico;
+    medico->addPaciente(this);
 }
 
 void PACIENTE::rmMedico(string nome){
-    this->medicos.erase(nome);
-}
+    auto it = medicos.find(nome);
 
-void MEDICO::rmPaciente(string nome){
-    this->pacientes.erase(nome);
+    if(it == medicos.end()){
+        cout << "Medico nao encontrado" << endl;
+        return;
+    }
+    MEDICO *medico = it->second;
+    this->medicos.erase(it);
+    medico->rmPaciente(this->nome);
 }
 
 class SISTEMA{
@@ -105,25 +128,66 @@ public:
     SISTEMA(){
     }
 
-    void addPaciente(PACIENTE* paciente){
-        this->pacientes[paciente->getNome()] = paciente;
+    void addPaciente(PACIENTE *paciente){
+        auto key = paciente->getNome();
+
+        if(pacientes.find(key) != pacientes.end()){
+            cout << "Paciente ja cadastrado no sistema" << endl;
+            return;
+        }
+        this->pacientes[key] = paciente;
     }
 
-    void addMedico(MEDICO* medico){
-        this->medicos[medico->getNome()] = medico;
+    void addMedico(MEDICO *medico){
+        auto key = medico->getNome();
+
+        if(medicos.find(key) != medicos.end()){
+            cout << "Medico ja cadastrado no sistema" << endl;
+            return;
+        }
+        this->medicos[key] = medico;
     }
 
     void rmMedico(string nome){
-        this->medicos.erase(nome);
+        auto it = medicos.find(nome);
+
+        if(it == medicos.end()){
+            cout << "Medico nao encontrado no sistema" << endl;
+            return;
+        }
+        this->medicos.erase(it);        
     }
 
     void rmPaciente(string nome){
-        this->pacientes.erase(nome);
+        auto it = pacientes.find(nome);
+
+        if(it == pacientes.end()){
+            cout << "Paciente nao encontrado no sistema" << endl;
+            return;
+        }
+        this->pacientes.erase(it);
     }
 
     void vincular(string nomeP, string nomeM){
-        this->pacientes[nomeP]->addMedico(this->medicos[nomeM]);
-        this->medicos[nomeM]->addPaciente(this->pacientes[nomeP]);
+        auto itP = pacientes.find(nomeP);
+        auto itM = medicos.find(nomeM);
+
+        if(itP != pacientes.end() && itM != medicos.end()){
+            itP->second->addMedico(itM->second);    // &(*itM->second) -> pega o endereco do medico
+            return;
+        }
+        cout << "Paciente ou medico nao encontrado" << endl;
+    }
+
+    void desvincular(string nomeP, string nomeM){
+        auto itP = pacientes.find(nomeP);
+        auto itM = medicos.find(nomeM);
+
+        if(itP != pacientes.end() && itM != medicos.end()){
+            itP->second->rmMedico(itM->second->getNome());
+            return;
+        }
+        cout << "Paciente ou medico nao encontrado" << endl;
     }
 
     void IMPRIMIR(){
@@ -140,20 +204,24 @@ public:
 int main(){
     SISTEMA sistema;
 
-    sistema.addPaciente(new PACIENTE("Joao", "Cancer"));
-    sistema.addPaciente(new PACIENTE("Maria", "pernaruim"));
-    sistema.addMedico(new MEDICO("ze", "c"));
-    sistema.addMedico(new MEDICO("zeze", "osso"));
-    sistema.IMPRIMIR();
+    sistema.addPaciente(new PACIENTE("ze", "1"));
+    sistema.addPaciente(new PACIENTE("luis", "2"));
 
+    sistema.addMedico(new MEDICO("DrFelipe", "1"));
+    sistema.addMedico(new MEDICO("DrJunior", "2"));
+    //sistema.addMedico(new MEDICO("Dr", "1"));
+
+    sistema.IMPRIMIR();
     cout << endl;
 
-    sistema.rmMedico("ze");
-    sistema.rmPaciente("Maria");
-    sistema.IMPRIMIR();
+    sistema.vincular("ze", "DrFelipe");
+    sistema.vincular("luis", "DrJunior");
+    //sistema.vincular("ze", "Dr");
 
+    sistema.IMPRIMIR();
     cout << endl;
 
-    sistema.vincular("Joao", "zeze");
+    sistema.desvincular("ze", "DrFelipe");
+
     sistema.IMPRIMIR();
 }
